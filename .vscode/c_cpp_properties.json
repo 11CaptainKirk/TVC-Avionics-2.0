@@ -1,0 +1,66 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/include",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/src",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/PID",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit BNO055",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit BNO055/utility",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit Unified Sensor",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Servo/src",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/variants/standard",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/include",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/src",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/PID",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit BNO055",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit BNO055/utility",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Adafruit Unified Sensor",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "S:/Projects/TVC Rocket/TVC Software/TVC Software 2.0/.pio/libdeps/uno/Servo/src",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/variants/standard",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "C:/Users/Rober/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=50101",
+                "ARDUINO_AVR_UNO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/Rober/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
