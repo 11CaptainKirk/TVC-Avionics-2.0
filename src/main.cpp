@@ -47,8 +47,6 @@ void setup() {
 
   // Initialize Serial Readout
   Serial.begin(9600);
-  Serial.println("Orientation Sensor Test");
-  Serial.println("");
   //
 
   // Initialize Button
@@ -56,6 +54,8 @@ void setup() {
   //
 
   // Initialize IMU
+  Serial.println("Orientation Sensor Test");
+  Serial.println("");
   if(!bno.begin()){
     Serial.print("Oops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     while(1);
@@ -91,7 +91,7 @@ if((buttonState != prevButtonState) && (buttonState == HIGH)) {
     tone(piezoPin, 3000, 100);
     delay(100);
     tone(piezoPin, 6000, 800);
-  }
+  }  // TODO: this is messed up below but it works
   if (systemState == false){
     tone(piezoPin, 8000, 800);
     delay(100);
