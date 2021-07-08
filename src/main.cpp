@@ -9,7 +9,7 @@
 // Setup Servos
 int servoYPin = 4;  // Set Servo Pin
 Servo ServoY;      // Create Servo Object
-int servoZPin = 3;  
+int servoZPin = 5;  
 Servo ServoZ;      
 //
 
@@ -56,9 +56,9 @@ void setup() {
   PIDy.SetMode(AUTOMATIC); // Turn PID on
   PIDz.SetMode(AUTOMATIC); 
   PIDy.SetOutputLimits(-255,255);
-  PIDz.SetOutputLimits(-255,255);
+  PIDz.SetOutputLimits(-255,255); // Allow Negative Outputs
   PIDy.SetSampleTime(25);
-  PIDz.SetSampleTime(25);
+  PIDz.SetSampleTime(25); // Increase update frequency (default 200)
   //
 }
 
