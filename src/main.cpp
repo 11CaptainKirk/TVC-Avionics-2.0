@@ -5,6 +5,7 @@
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 #include <PID_v1.h>
+#include <Adafruit_BMP3XX.h>
 
 // Setup Servos
 int servoYPin = 4;  // Set Servo Pin
@@ -23,6 +24,11 @@ int buttonPin = 2;
 int buttonState;
 int prevButtonState;
 bool systemState = false;
+//
+
+// Setup Barometer
+double seaPressure = 1013.25;
+Adafruit_BMP3XX bmp;
 //
 
 // Setup IMU
@@ -57,11 +63,22 @@ void setup() {
   Serial.println("Orientation Sensor Test");
   Serial.println("");
   if(!bno.begin()){
-    Serial.print("Oops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    Serial.print("** BNO055 not detected **\t\t<<");
     while(1);
   }
   delay(1000); //TODO: Why this delay?
   bno.setExtCrystalUse(true);
+  //
+
+  // Initialize Barometer
+  if (!bmp.begin_I2C()){
+    Serial.println("** BMP388 not detected **\t\t<<");
+    while(1);
+  }
+  bmp.setTemperatureOversampling(BMP3_OVERSAMPLING_8X);
+  bmp.setPressureOversampling(BMP3_OVERSAMPLING_4X);
+  bmp.setIIRFilterCoeff(BMP3_IIR_FILTER_COEFF_3);
+  bmp.setOutputDataRate(BMP3_ODR_1_5_HZ);
   //
 
   // Initialize PID
@@ -141,21 +158,38 @@ if(OutputZ > 10){
 int interval = 1000;
 if((millis()-prevMillis) > interval){
   prevMillis = millis();
-  tone(piezoPin, 2000, 100);
+  tone(piezoPin, 4000, 100);
 } 
 //
 
-// Display FP data
-Serial.print("X: ");
-Serial.print(event.orientation.x,4);
-Serial.print("\tY: ");
-Serial.print(event.orientation.y,4);
-Serial.print("\tZ: ");
-Serial.print(event.orientation.z,4);
-Serial.print("\t\tOutput Y: ");
+float Xorient = event.orientation.x;
+
+
+// Display FP data       (Parts commented out because they interfere with performance)
+Serial.print(millis());
+
+//Serial.print("\t\tX: ");
+Serial.print(Xorient,4);
+//Serial.print("\tY: ");
+Serial.print(InputY,4);
+//Serial.print("\tZ: ");
+Serial.print(InputZ,4);
+//Serial.print("\t\tOutput Y: ");
 Serial.print(OutputY,4);
-Serial.print("\t\tOutput Z: ");
-Serial.print(event.orientation.z,4);
+//Serial.print("\t\tOutput Z: ");
+Serial.print(OutputZ,4);
+
+//Serial.print("\tTemperature = ");
+  Serial.print(bmp.temperature);
+  //Serial.print(" *C");
+
+  //Serial.print("\tPressure = ");
+  Serial.print(bmp.pressure / 100.0);
+  //Serial.print(" hPa");
+
+  //Serial.print("\tApprox. Altitude = ");
+  Serial.print(bmp.readAltitude(seaPressure));
+  //Serial.print(" m");
 Serial.println("");
 
 } else {
