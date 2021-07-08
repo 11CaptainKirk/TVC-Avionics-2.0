@@ -13,6 +13,18 @@ int servoZPin = 5;
 Servo ServoZ;      
 //
 
+// Setup Piezo Buzzer
+int piezoPin = 6;
+long prevMillis = 0;
+//
+
+// Setup Button
+int buttonPin = 2;
+int buttonState;
+int prevButtonState;
+bool systemState = false;
+//
+
 // Setup IMU
 Adafruit_BNO055 bno = Adafruit_BNO055(55); // Create IMU Object
 //
@@ -37,6 +49,10 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Orientation Sensor Test");
   Serial.println("");
+  //
+
+  // Initialize Button
+  pinMode(buttonPin, INPUT);
   //
 
   // Initialize IMU
@@ -66,6 +82,30 @@ void loop() {
 
 int servoHome = 90; // Set Home Position of servo (degrees)
 
+buttonState = digitalRead(buttonPin);
+if((buttonState != prevButtonState) && (buttonState == HIGH)) {
+  systemState = !systemState;
+  if (systemState == true){
+    tone(piezoPin, 3000, 100);
+    delay(100);
+    tone(piezoPin, 3000, 100);
+    delay(100);
+    tone(piezoPin, 6000, 800);
+  }
+  if (systemState == false){
+    tone(piezoPin, 8000, 800);
+    delay(100);
+    tone(piezoPin, 4000, 100);
+    delay(100);
+    tone(piezoPin, 4000, 100);
+  }
+}
+prevButtonState = buttonState;
+Serial.print(systemState);
+Serial.print("\t\t");
+
+
+if(systemState == true){
 // Get new sensor event
 sensors_event_t event;
 bno.getEvent(&event);
@@ -97,6 +137,13 @@ if(OutputZ > 10){
 }
 //
 
+// Piezo Buzzer
+int interval = 1000;
+if((millis()-prevMillis) > interval){
+  prevMillis = millis();
+  tone(piezoPin, 2000, 100);
+} 
+//
 
 // Display FP data
 Serial.print("X: ");
@@ -111,6 +158,9 @@ Serial.print("\t\tOutput Z: ");
 Serial.print(event.orientation.z,4);
 Serial.println("");
 
+} else {
+  delay(25);
+}
 //  delay(25);
 
 
