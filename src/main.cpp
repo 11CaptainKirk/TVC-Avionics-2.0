@@ -46,6 +46,11 @@ PID PIDz(&InputZ, &OutputZ, &Setpoint, 1, 0, 0, DIRECT); // PID Z
 
 void setup() {
 
+  pinMode(3, OUTPUT);
+  pinMode(A2, OUTPUT);
+  digitalWrite(A2, LOW);
+  digitalWrite(3, HIGH);
+
   // Initialize Servos
   ServoY.attach(servoYPin);
   ServoZ.attach(servoZPin);
@@ -108,6 +113,7 @@ if((buttonState != prevButtonState) && (buttonState == HIGH)) {
     tone(piezoPin, 3000, 100);
     delay(100);
     tone(piezoPin, 6000, 800);
+    
   }  // TODO: this is messed up below but it works
   if (systemState == false){
     tone(piezoPin, 8000, 800);
@@ -127,7 +133,7 @@ if(systemState == true){
 sensors_event_t event;
 bno.getEvent(&event);
 //
-
+digitalWrite(A2, HIGH);
 // Update inputs & compute PID
 InputY = event.orientation.y;
 InputZ = event.orientation.z;
@@ -194,6 +200,7 @@ Serial.println("");
 
 } else {
   delay(25);
+  digitalWrite(A2, LOW);
 }
 //  delay(25);
 
