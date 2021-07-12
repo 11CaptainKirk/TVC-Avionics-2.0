@@ -6,34 +6,38 @@
 #include <utility/imumaths.h>
 #include <PID_v1.h>
 #include <Adafruit_BMP3XX.h>
+#include <SD.h>
+#include <SPI.h>
 
 // Setup Servos
-int servoYPin = 4;  // Set Servo Pin
+short servoYPin = 4;  // Set Servo Pin
 Servo ServoY;      // Create Servo Object
-int servoZPin = 5;  
+short servoZPin = 5;  
 Servo ServoZ;      
 //
 
 // Setup Piezo Buzzer
-int piezoPin = 6;
+short piezoPin = 6;
 long prevMillis = 0;
 //
 
 // Setup Button
-int buttonPin = 2;
-int buttonState;
-int prevButtonState;
+short buttonPin = 2;
+short buttonState;
+short prevButtonState;
 bool systemState = false;
 //
 
 // Setup Barometer
-double seaPressure = 1013.25;
+float seaPressure = 1013.25;
 Adafruit_BMP3XX bmp;
 //
 
 // Setup IMU
 Adafruit_BNO055 bno = Adafruit_BNO055(55); // Create IMU Object
 //
+
+File currFlightData;
 
 // Setup PID Controllers
 double Setpoint;
@@ -58,6 +62,18 @@ void setup() {
 
   // Initialize Serial Readout
   Serial.begin(9600);
+  while (!Serial) {
+  ;
+  }
+  //
+
+  // Initalize SD Card
+  Serial.print("SD Card...");
+  if (!SD.begin(10)) {
+    Serial.println("Initialization failed!");
+    while(1);
+  }
+  Serial.println("Initialization Done.");
   //
 
   // Initialize Button
@@ -102,7 +118,8 @@ void setup() {
 
 void loop() {
 
-int servoHome = 90; // Set Home Position of servo (degrees)
+Serial.println("looping");
+short servoHome = 90; // Set Home Position of servo (degrees)
 
 buttonState = digitalRead(buttonPin);
 if((buttonState != prevButtonState) && (buttonState == HIGH)) {
@@ -161,7 +178,7 @@ if(OutputZ > 10){
 //
 
 // Piezo Buzzer
-int interval = 1000;
+short interval = 1000;
 if((millis()-prevMillis) > interval){
   prevMillis = millis();
   tone(piezoPin, 4000, 100);
@@ -170,6 +187,20 @@ if((millis()-prevMillis) > interval){
 
 float Xorient = event.orientation.x;
 
+// Write to SD Card
+currFlightData = SD.open("currflight.csv", FILE_WRITE);
+if (currFlightData) {
+  Serial.print("TEST Writing,");
+  Serial.println("This is a test.");
+  currFlightData.close();
+} else {
+  int interval2 = 100;
+  if((millis()-prevMillis) > interval2){
+  prevMillis = millis();
+  tone(piezoPin, 4000, 50);
+} 
+}
+//
 
 // Display FP data       (Parts commented out because they interfere with performance)
 Serial.print(millis());
